@@ -5924,7 +5924,13 @@ PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9InRoIj4KPGhlYWQ+CiAgPG1ldGEgY2hhcnNldD0iVVRG
       function getBdeOldDashboardSource(item) {
         const node = document.getElementById('bdeFormBase64');
         if (!node) return '';
-        const baseHtml = decodeB64Utf8(node.textContent);
+        let baseHtml = decodeB64Utf8(node.textContent);
+
+        // Remove the old wording embedded inside the Base64 dashboard source.
+        baseHtml = baseHtml
+          .replaceAll('ตัวชี้วัดต่ำกว่าเป้าหมายระดับเสี่ยง', 'ตัวชี้วัดต่ำกว่าเป้าหมาย')
+          .replaceAll('ต่ำกว่าเป้าหมายระดับเสี่ยง', 'ต่ำกว่าเป้าหมาย');
+
         const itemJson = JSON.stringify(item || {}).replace(/</g, '\\u003c');
 
         const patch = `
