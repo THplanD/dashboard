@@ -4300,6 +4300,54 @@
       font-size: 13px;
       text-align: center;
     }
+    /* ปรับสัดส่วนคอลัมน์โครงการและปีงบประมาณ */
+    .detail-project-table .col-project { width: 36%; }
+    .detail-project-table .col-budget { width: 14%; }
+    .detail-project-table .col-strategy { width: 10%; }
+    .detail-project-table .col-year { width: 12%; text-align: center; }
+    .detail-project-table .col-progress { width: 21%; }
+
+    .detail-project-year {
+      display: inline;
+      max-width: 100%;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      box-shadow: none;
+    }
+
+    /* ชื่อโครงการอย่างน้อย 2 บรรทัด และรองรับข้อความยาว */
+    .detail-project-name {
+      min-height: 2.9em;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      line-height: 1.45;
+    }
+
+    /* ย่อกล่องค่าและเปอร์เซ็นต์ เพื่อเพิ่มพื้นที่ข้อความ */
+    .detail-project-progress-cell {
+      grid-template-columns: minmax(105px, 1fr) 44px;
+      gap: 8px;
+    }
+    .detail-project-progress-value {
+      min-width: 42px;
+      height: 27px;
+      padding: 0 6px;
+      font-size: 11px;
+    }
+
     @media (max-width: 768px) {
       .detail-project-table-head { padding: 16px; }
       .detail-project-table-title { font-size: 18px; }
@@ -5442,7 +5490,7 @@
                         const status = getProgressStatus(progress);
                         const valueText = indicator.value || indicator.currentValue || indicator.target || '-';
                         const cls = status.key === 'completed' ? 'is-completed' : status.key === 'onplan' ? 'is-on-plan' : 'is-below';
-                        return `<span class="detail-value-chip ${cls}"><span>${i + 1}</span>${escapeHtml(valueText)}</span>`;
+                        return `<span class="detail-value-chip ${cls}" title="${escapeHtml(valueText)}"><span>${i + 1}</span>${escapeHtml(valueText)}</span>`;
                       }).join('')}
                     </div>
                   </div>
@@ -6250,6 +6298,108 @@
             }
           
 
+
+
+    /* === PATCH: ป้องกันกล่องค่าตัวชี้วัดทับชื่อ และตัดข้อความยาวด้วย ... === */
+    @media (min-width: 769px) {
+      .indicator-detail-row {
+        display: grid !important;
+        grid-template-columns: 34px minmax(150px, 1fr) minmax(120px, 210px) max-content !important;
+        grid-template-areas: "number name value status" !important;
+        align-items: center !important;
+        column-gap: 10px !important;
+        row-gap: 6px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .indicator-detail-no {
+        grid-area: number !important;
+      }
+
+      .indicator-detail-name {
+        grid-area: name !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        display: block !important;
+      }
+
+      .indicator-detail-value {
+        grid-area: value !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 210px !important;
+        justify-self: stretch !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        display: block !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+      }
+
+      .indicator-detail-status {
+        grid-area: status !important;
+        width: max-content !important;
+        max-width: 150px !important;
+        min-width: 0 !important;
+        justify-self: end !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+      }
+    }
+
+    /* หน้าจอขนาดกลาง: ลดกล่องค่าเล็กน้อย เพื่อเหลือพื้นที่ให้ชื่อตัวชี้วัด */
+    @media (min-width: 769px) and (max-width: 1100px) {
+      .indicator-detail-row {
+        grid-template-columns: 34px minmax(120px, 1fr) minmax(105px, 165px) max-content !important;
+      }
+
+      .indicator-detail-value {
+        max-width: 165px !important;
+      }
+
+      .indicator-detail-status {
+        max-width: 135px !important;
+      }
+    }
+
+    /* === PATCH 2: ให้ชื่อตัวชี้วัดแสดงได้ 2 บรรทัด และย่อกล่องค่า === */
+    @media (min-width: 769px) {
+      .indicator-detail-row {
+        grid-template-columns: 34px minmax(220px, 1fr) minmax(96px, 150px) max-content !important;
+        align-items: center !important;
+      }
+      .indicator-detail-name {
+        min-height: 2.84em !important;
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 2 !important;
+        white-space: normal !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        line-height: 1.42 !important;
+      }
+      .indicator-detail-value {
+        max-width: 150px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        font-size: 12px !important;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 1100px) {
+      .indicator-detail-row {
+        grid-template-columns: 34px minmax(180px, 1fr) minmax(90px, 125px) max-content !important;
+      }
+      .indicator-detail-value { max-width: 125px !important; }
+    }
+
     /* === Dashboard end-year: inline with the title === */
     .detail-original-dashboard-head {
       display: block;
@@ -6478,7 +6628,9 @@
               order: Number(project.order || project.project_order || index + 1),
               name: project.name || project.project_name || '',
               strategyNo: project.relatedStrategyNo || project.strategy_no || project.strategyNo || '',
-              fiscalYear: project.fiscalYear || project.fiscal_year || '',
+              fiscalYearStart: project.fiscalYearStart || project.fiscal_start_date || project.fiscalYear || project.fiscal_year || '',
+              fiscalYearEnd: project.fiscalYearEnd || project.fiscal_end_date || '',
+              fiscalYear: project.fiscalYear || project.fiscal_year || project.fiscalYearStart || project.fiscal_start_date || '',
               budget: project.budget || project.projectBudget || project.project_budget || project.duration || project.project_duration || '',
               progress: project.progressValue ?? project.progress_value ?? project.progress ?? 0
             });
@@ -6490,7 +6642,9 @@
                   order: Number(project.order || project.project_order || result.length + 1),
                   name: project.name || project.project_name || '',
                   strategyNo: strategy.no || strategy.strategy_no || strategyIndex + 1,
-                  fiscalYear: project.fiscalYear || project.fiscal_year || '',
+                  fiscalYearStart: project.fiscalYearStart || project.fiscal_start_date || project.fiscalYear || project.fiscal_year || '',
+                  fiscalYearEnd: project.fiscalYearEnd || project.fiscal_end_date || '',
+                  fiscalYear: project.fiscalYear || project.fiscal_year || project.fiscalYearStart || project.fiscal_start_date || '',
                   budget: project.budget || project.projectBudget || project.project_budget || project.duration || project.project_duration || '',
                   progress: project.progressValue ?? project.progress_value ?? project.progress ?? (project.status === 'completed' ? 100 : 0)
                 });
@@ -6505,6 +6659,37 @@
               return orderA - orderB;
             })
             .slice(0, 10);
+        }
+        function formatFiscalStartYear(value) {
+          const raw = String(value == null ? '' : value).trim();
+
+          // ค่าว่าง, 0 หรือค่าที่ไม่ใช่ปี ไม่ควรถูกแปลงเป็น พ.ศ. 2500
+          if (!raw || raw === '0' || raw === '-' || /^0+(?:\.0+)?$/.test(raw)) return '-';
+
+          // รองรับวันที่รูปแบบ YYYY-MM-DD, YYYY/MM/DD และวันที่ ISO
+          // ปีงบประมาณไทยเริ่ม 1 ตุลาคม: 2025-10-01 จึงเป็นปีงบประมาณ 2569
+          const dateMatch = raw.match(/\b((?:19|20)\d{2})[-\/]([01]?\d)[-\/]([0-3]?\d)\b/);
+          if (dateMatch) {
+            const year = Number(dateMatch[1]);
+            const month = Number(dateMatch[2]);
+            if (month >= 1 && month <= 12) {
+              return String(year + (month >= 10 ? 544 : 543));
+            }
+          }
+
+          // รองรับปี ค.ศ. ที่ส่งมาเป็นปีอย่างเดียว
+          const gregorianMatch = raw.match(/\b((?:19|20)\d{2})\b/);
+          if (gregorianMatch) return String(Number(gregorianMatch[1]) + 543);
+
+          // รองรับปี พ.ศ. ที่ส่งมาอยู่แล้ว
+          const buddhistMatch = raw.match(/\b(2[4-7]\d{2})\b/);
+          if (buddhistMatch) return buddhistMatch[1];
+
+          return '-';
+        }
+        function formatFiscalYears(project) {
+          // แสดงเฉพาะปีงบประมาณจากวันที่เริ่มต้นเท่านั้น
+          return formatFiscalStartYear(project.fiscalYearStart || project.fiscalYear || '');
         }
         const projects = collectProjects(item);
         if (!projects.length) return '';
@@ -6535,7 +6720,7 @@
                         <td class="col-project"><div class="detail-project-name">${esc(project.name)}</div></td>
                         <td class="col-budget detail-project-budget">${esc(project.budget || '-')}</td>
                         <td class="col-strategy"><span class="detail-project-strategy">${esc(project.strategyNo || '-')}</span></td>
-                        <td class="col-year">${esc(project.fiscalYear || '-')}</td>
+                        <td class="col-year"><span class="detail-project-year">${esc(formatFiscalYears(project))}</span></td>
                         <td class="col-progress">
                           <div class="detail-project-progress-cell">
                             <div class="detail-project-progress-track">
