@@ -3146,8 +3146,56 @@
 
     .detail-summary-pies {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 14px;
+    }
+
+    .detail-summary-empty {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 28px 18px 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .detail-summary-empty-icon {
+      width: 76px;
+      height: 76px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.72);
+    }
+
+    .detail-summary-empty-icon svg {
+      width: 38px;
+      height: 38px;
+      stroke: currentColor;
+    }
+
+    .detail-summary-empty-title {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .detail-summary-empty-text {
+      max-width: 360px;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 500;
+      color: rgba(255,255,255,0.56);
     }
 
     .detail-pie-card {
@@ -6580,7 +6628,10 @@
       }
 
       function renderDetailPie(title, stats, unit) {
-        const total = Math.max(stats.total || 0, 1);
+        const rawTotal = Number(stats?.total || 0);
+        if (!rawTotal) return '';
+
+        const total = Math.max(rawTotal, 1);
         const successPct = Math.round(((stats.achieved || 0) / total) * 100);
         const pendingPct = Math.max(0, 100 - successPct);
 
@@ -6597,6 +6648,31 @@
               <div class="detail-pie-legend-row"><span class="detail-pie-legend-label"><i class="detail-pie-dot success"></i>บรรลุเป้าหมาย</span><span class="detail-pie-legend-value">${stats.achieved || 0}</span></div>
               <div class="detail-pie-legend-row"><span class="detail-pie-legend-label"><i class="detail-pie-dot pending"></i>ยังไม่บรรลุเป้าหมาย</span><span class="detail-pie-legend-value">${stats.pending || 0}</span></div>
             </div>
+          </div>
+        `;
+      }
+
+      function renderDetailSummaryContent(overallTargetStats, indicatorStats) {
+        const charts = [
+          renderDetailPie('ความสำเร็จของตัวชี้วัดรวม', overallTargetStats, 'ตัวชี้วัด'),
+          renderDetailPie('ความสำเร็จของตัวชี้วัดรายยุทธศาสตร์', indicatorStats, 'ตัวชี้วัด')
+        ].filter(Boolean);
+
+        if (charts.length) {
+          return `<div class="detail-summary-pies">${charts.join('')}</div>`;
+        }
+
+        return `
+          <div class="detail-summary-empty">
+            <div class="detail-summary-empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 19.5h10l3.5 4h5L30 19.5h10v17a3.5 3.5 0 0 1-3.5 3.5h-25A3.5 3.5 0 0 1 8 36.5v-17Z" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M14 19.5 17.5 10h13L34 19.5" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M24 4v5M14.5 7.5l3 3M33.5 7.5l-3 3" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="detail-summary-empty-title">ยังไม่มีข้อมูล</div>
+            <p class="detail-summary-empty-text">ข้อมูลภาพรวมสถานะจะแสดงเมื่อมีการบันทึกข้อมูลตัวชี้วัด</p>
           </div>
         `;
       }
@@ -7016,10 +7092,7 @@
               </div>
               <div class="detail-summary-panel">
                 <div class="detail-summary-panel-title">ภาพรวมสถานะ</div>
-                <div class="detail-summary-pies">
-                  ${renderDetailPie('ความสำเร็จของตัวชี้วัดรวม', overallTargetStats, 'ตัวชี้วัด')}
-                  ${renderDetailPie('ความสำเร็จของตัวชี้วัดรายยุทธศาสตร์', indicatorStats, 'ตัวชี้วัด')}
-                </div>
+                ${renderDetailSummaryContent(overallTargetStats, indicatorStats)}
               </div>
             </div>
           </div>
