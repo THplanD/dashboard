@@ -5406,7 +5406,7 @@
             <p class="approval-item-meta">
               หน่วยงาน: ${escapeHtml(getAgency(item))}<br>
               ส่งเมื่อ: ${escapeHtml(item.submittedAt || '-') }<br>
-              ${stats.total} ตัวชี้วัดที่นำมาคำนวณ • บรรลุเป้าหมาย ${stats.completed} • ใกล้เคียงเป้าหมาย ${stats.onPlan} • ต่ำกว่าเป้าหมาย ${stats.below}${stats.na ? ` • N/A ${stats.na}` : ''}
+              ${stats.total} ตัวชี้วัด • บรรลุเป้าหมาย ${stats.completed} • ใกล้เคียงเป้าหมาย ${stats.onPlan} • ต่ำกว่าเป้าหมาย ${stats.below}${stats.na ? ` • N/A ${stats.na}` : ''}
             </p>
             <div class="approval-actions">
               ${
@@ -5543,7 +5543,7 @@
               <div class="detail-summary-kpi-grid">
                 <div class="detail-summary-kpi-card" style="grid-column:1/-1;border-color:#d7ddd9;background:#f4f6f5;">
                   <div>
-                    <div class="detail-kpi-label" style="color:#66726a;">ไม่มีข้อมูลสำหรับคำนวณ</div>
+                    <div class="detail-kpi-label" style="color:#66726a;">ไม่มีข้อมูล</div>
                     <div class="detail-kpi-count" style="color:#66726a;">N/A</div>
                     <div class="detail-kpi-sub">${stats.na} ตัวชี้วัด • ไม่นำมาคำนวณผลความก้าวหน้า</div>
                   </div>
@@ -5565,7 +5565,7 @@
                 <div>
                   <div class="detail-kpi-label">ตัวชี้วัดต่ำกว่าเป้าหมาย</div>
                   <div class="detail-kpi-count">${stats.below}<small>ตัวชี้วัด</small></div>
-                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัดที่นำมาคำนวณ${stats.na ? ` • N/A ${stats.na}` : ''}</div>
+                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
                 </div>
               </div>
               <div class="detail-summary-kpi-card onplan">
@@ -5573,7 +5573,7 @@
                 <div>
                   <div class="detail-kpi-label">ตัวชี้วัดใกล้เคียงเป้าหมาย</div>
                   <div class="detail-kpi-count">${stats.onPlan}<small>ตัวชี้วัด</small></div>
-                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัดที่นำมาคำนวณ${stats.na ? ` • N/A ${stats.na}` : ''}</div>
+                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
                 </div>
               </div>
               <div class="detail-summary-kpi-card completed">
@@ -5581,7 +5581,7 @@
                 <div>
                   <div class="detail-kpi-label">ตัวชี้วัดบรรลุเป้าหมาย</div>
                   <div class="detail-kpi-count">${stats.completed}<small>ตัวชี้วัด</small></div>
-                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัดที่นำมาคำนวณ${stats.na ? ` • N/A ${stats.na}` : ''}</div>
+                  <div class="detail-kpi-sub">จาก ${stats.total} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
                 </div>
               </div>
             </div>
@@ -5694,22 +5694,22 @@
             <div class="detail-stat-card">
               <div class="detail-stat-label">ตัวชี้วัดทั้งหมด</div>
               <div class="detail-stat-value">${stats.total}</div>
-              <div class="detail-stat-note">รายการตัวชี้วัดที่นำมาคำนวณในชุดข้อมูลนี้${stats.na ? ` • ไม่รวม N/A ${stats.na}` : ''}</div>
+              <div class="detail-stat-note">รายการตัวชี้วัด${stats.na ? ` • ไม่รวม N/A ${stats.na}` : ''}</div>
             </div>
             <div class="detail-stat-card completed">
               <div class="detail-stat-label">บรรลุเป้าหมาย</div>
               <div class="detail-stat-value">${stats.completed}</div>
-              <div class="detail-stat-note">${stats.completedPct}% ของตัวชี้วัดที่นำมาคำนวณ</div>
+              <div class="detail-stat-note">${stats.completedPct}% ของตัวชี้วัด</div>
             </div>
             <div class="detail-stat-card onplan">
               <div class="detail-stat-label">ใกล้เคียงเป้าหมาย</div>
               <div class="detail-stat-value">${stats.onPlan}</div>
-              <div class="detail-stat-note">${stats.onPlanPct}% ของตัวชี้วัดที่นำมาคำนวณ</div>
+              <div class="detail-stat-note">${stats.onPlanPct}% ของตัวชี้วัด</div>
             </div>
             <div class="detail-stat-card below">
               <div class="detail-stat-label">ต่ำกว่าเป้าหมาย</div>
               <div class="detail-stat-value">${stats.below}</div>
-              <div class="detail-stat-note">${stats.belowPct}% ของตัวชี้วัดที่นำมาคำนวณ</div>
+              <div class="detail-stat-note">${stats.belowPct}% ของตัวชี้วัด</div>
             </div>
           </div>
 
@@ -5786,11 +5786,11 @@
               </div>
               ${targetBox}
             </div>
-            <div class="metric-count indicator-count-pill">${stats.total || 0} ตัวชี้วัดที่นำมาคำนวณ${stats.na ? ` • N/A ${stats.na}` : ''}</div>
+            <div class="metric-count indicator-count-pill">${stats.total || 0} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
             ${(stats.total || 0) === 0 && (stats.na || 0) > 0 ? `
               <div class="approved-kpi-na-state" style="margin-top:18px;padding:18px;border-radius:14px;background:#f4f6f5;border:1px solid #d7ddd9;color:#66726a;text-align:center;">
                 <div style="font-size:26px;font-weight:800;">N/A</div>
-                <div style="font-size:13px;font-weight:600;margin-top:4px;">ไม่มีข้อมูลสำหรับคำนวณ • ${stats.na} ตัวชี้วัด</div>
+                <div style="font-size:13px;font-weight:600;margin-top:4px;">ไม่มีข้อมูล • ${stats.na} ตัวชี้วัด</div>
               </div>
             ` : `
               <div class="progress-label">บรรลุเป้าหมาย</div>
@@ -6173,7 +6173,7 @@
                       <div><strong>หน่วยงาน:</strong> ${item.planInfo?.agencyName || '-'}</div>
                       <div><strong>วันที่ส่งข้อมูล:</strong> ${item.submittedAt || '-'}</div>
                       <div><strong>จำนวนยุทธศาสตร์:</strong> ${strategies.length}</div>
-                      <div><strong>จำนวนตัวชี้วัดที่นำมาคำนวณ:</strong> ${total}${na ? ` • N/A ${na}` : ''}</div>
+                      <div><strong>จำนวนตัวชี้วัด</strong> ${total}${na ? ` • N/A ${na}` : ''}</div>
                     </div>
                   </div>
                   <div class="detail-summary-panel">
@@ -6734,7 +6734,7 @@
                 </div>
               </div>
               <div class="detail-pie-legend">
-                <div class="detail-pie-legend-row"><span class="detail-pie-legend-label"><i class="detail-pie-dot na"></i>N/A (ไม่มีข้อมูลสำหรับคำนวณ)</span><span class="detail-pie-legend-value">${naCount}</span></div>
+                <div class="detail-pie-legend-row"><span class="detail-pie-legend-label"><i class="detail-pie-dot na"></i>N/A (ไม่มีข้อมูล)</span><span class="detail-pie-legend-value">${naCount}</span></div>
               </div>
             </div>
           `;
@@ -7196,7 +7196,7 @@
                   <div><strong>หน่วยงาน:</strong> ${safeHtml(agency)}</div>
                   <div><strong>วันที่ส่งข้อมูล:</strong> ${safeHtml(submittedAt)}</div>
                   <div><strong>จำนวนยุทธศาสตร์:</strong> ${stats.strategies} ยุทธศาสตร์</div>
-                  <div><strong>จำนวนตัวชี้วัดที่นำมาคำนวณ:</strong> ${stats.total} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
+                  <div><strong>จำนวนตัวชี้วัด:</strong> ${stats.total} ตัวชี้วัด${stats.na ? ` • N/A ${stats.na}` : ''}</div>
                 </div>
               </div>
               <div class="detail-summary-panel">
