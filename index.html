@@ -3516,10 +3516,10 @@
     }
     .status-card-loading h3 {
       margin: 0;
-      color: #111827;
-      font-size: 28px;
-      line-height: 1.35;
-      font-weight: 700;
+      color: #344054;
+      font-size: 24px;
+      line-height: 1.45;
+      font-weight: 400;
       max-width: 760px;
     }
     .status-loading-progress {
@@ -3547,13 +3547,14 @@
     /* Notebook / small desktop */
     @media (min-width: 769px) and (max-width: 1366px) {
       .status-card-loading {
-        min-height: 190px;
-        padding: 28px 30px;
-        gap: 16px;
+        min-height: 150px;
+        padding: 24px 28px;
+        gap: 14px;
       }
       .status-card-loading h3 {
-        font-size: 24px;
-        line-height: 1.32;
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: 400;
       }
       .status-loading-progress {
         width: min(520px, 100%);
@@ -3576,13 +3577,14 @@
       min-height: 0 !important;
       }
       .status-card-loading {
-        min-height: 170px !important;
-        padding: 24px 22px !important;
-        gap: 14px !important;
+        min-height: 130px !important;
+        padding: 22px 20px !important;
+        gap: 12px !important;
       }
       .status-card-loading h3 {
-        font-size: 21px !important;
-        line-height: 1.35 !important;
+        font-size: 18px !important;
+        line-height: 1.45 !important;
+        font-weight: 400 !important;
       }
       .status-loading-progress {
         width: 100% !important;
@@ -4623,14 +4625,6 @@
           <div class="status-card status-card-loading" data-default-card="true">
             <h3>ระบบกำลังเชื่อมต่อข้อมูลเพื่อแสดงผล</h3>
             <div class="status-loading-progress" aria-hidden="true"><div class="status-loading-progress-bar"></div></div>
-          </div>
-        </div>
-            <div class="status-loading-meta"><span>ดึงข้อมูลจากแหล่งข้อมูล</span><span>กำลังดำเนินการ</span></div>
-            <div class="status-loading-steps">
-              <div class="status-loading-step is-active">เชื่อมต่อข้อมูลจาก Google Sheet / ระบบต้นทาง</div>
-              <div class="status-loading-step is-active">ตรวจสอบรายการและสถานะการอนุมัติ</div>
-              <div class="status-loading-step is-active">เตรียมสรุปผลเพื่อแสดงบนหน้า Dashboard</div>
-            </div>
           </div>
         </div>
 
