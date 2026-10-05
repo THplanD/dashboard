@@ -3504,6 +3504,127 @@
       font-weight: 400;
     }
 
+    .status-card-loading {
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(247,250,248,0.98) 100%);
+    }
+    .status-loading-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #eef8e8;
+      color: #2f7f20;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .status-loading-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #7ac943;
+      box-shadow: 0 0 0 6px rgba(122,201,67,0.16);
+    }
+    .status-card-loading h3 {
+      margin: 0;
+      color: #0f172a;
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .status-card-loading .status-card-empty-text {
+      max-width: 720px;
+      color: #667085;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .status-loading-progress {
+      position: relative;
+      width: min(560px, 100%);
+      height: 16px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e8edf2;
+      box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.05);
+    }
+    .status-loading-progress::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 48%, rgba(255,255,255,0) 100%);
+      transform: translateX(-100%);
+      animation: loadingShine 1.8s ease-in-out infinite;
+    }
+    .status-loading-progress-bar {
+      width: 48%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #8dd73e 0%, #7ac943 48%, #38b24a 100%);
+      background-size: 200% 100%;
+      animation: loadingPulse 2.4s ease-in-out infinite;
+      box-shadow: 0 8px 18px rgba(122,201,67,0.25);
+    }
+    .status-loading-meta {
+      width: min(560px, 100%);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #667085;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .status-loading-steps {
+      width: min(760px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .status-loading-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #e5ebe7;
+      background: #ffffff;
+      color: #475467;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .status-loading-step::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #c4ccd6;
+      flex: 0 0 auto;
+    }
+    .status-loading-step.is-active::before {
+      background: #7ac943;
+      box-shadow: 0 0 0 6px rgba(122,201,67,0.15);
+    }
+    @keyframes loadingPulse {
+      0% { width: 36%; background-position: 0% 50%; }
+      50% { width: 72%; background-position: 100% 50%; }
+      100% { width: 36%; background-position: 0% 50%; }
+    }
+    @keyframes loadingShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
 
     /* === MOBILE ONLY: RESPONSIVE TUNING (desktop remains unchanged) === */
     @media (max-width: 768px) {
@@ -3518,6 +3639,31 @@
       .status-card.approved-home-card {
         padding: 24px 20px 22px !important;
       min-height: 0 !important;
+      }
+      .status-card-loading {
+        min-height: 0 !important;
+        padding: 26px 22px !important;
+        gap: 12px !important;
+      }
+      .status-card-loading h3 {
+        font-size: 28px !important;
+        line-height: 1.22 !important;
+      }
+      .status-card-loading .status-card-empty-text {
+        font-size: 15px !important;
+      }
+      .status-loading-progress,
+      .status-loading-meta,
+      .status-loading-steps {
+        width: 100% !important;
+      }
+      .status-loading-steps {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
+      .status-loading-step {
+        font-size: 13px !important;
+        padding: 11px 12px !important;
       }
       .status-card.approved-home-card h3 {
         max-width: 100% !important;
@@ -4551,9 +4697,17 @@
 
             <div class="dashboard-grid" id="homepageDashboardGrid">
         <div id="approvedStatusCards" class="approved-status-cards">
-          <div class="status-card status-card-empty" data-default-card="true">
-            <h3>กำลังโหลดข้อมูลที่อนุมัติแล้ว</h3>
-            <p class="status-card-empty-text">ข้อมูลจะแสดงจาก Google Sheet เมื่อมีรายการที่ได้รับการอนุมัติ</p>
+          <div class="status-card status-card-loading" data-default-card="true">
+            <div class="status-loading-kicker">กำลังเชื่อมต่อข้อมูล</div>
+            <h3>กำลังดึงข้อมูลเพื่อแสดงผลบน Dashboard</h3>
+            <p class="status-card-empty-text">ระบบกำลังตรวจสอบข้อมูลที่ได้รับการอนุมัติและเตรียมสรุปผลเพื่อนำขึ้นแสดงบนหน้าแรก</p>
+            <div class="status-loading-progress" aria-hidden="true"><div class="status-loading-progress-bar"></div></div>
+            <div class="status-loading-meta"><span>ดึงข้อมูลจากแหล่งข้อมูล</span><span>กำลังดำเนินการ</span></div>
+            <div class="status-loading-steps">
+              <div class="status-loading-step is-active">เชื่อมต่อข้อมูลจาก Google Sheet / ระบบต้นทาง</div>
+              <div class="status-loading-step is-active">ตรวจสอบรายการและสถานะการอนุมัติ</div>
+              <div class="status-loading-step is-active">เตรียมสรุปผลเพื่อแสดงบนหน้า Dashboard</div>
+            </div>
           </div>
         </div>
 
@@ -5816,14 +5970,22 @@ PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9InRoIj4KPGhlYWQ+CiAgPG1ldGEgY2hhcnNldD0iVVRG
         const carousel = document.querySelector('.carousel');
         const statusCardsWrap = document.getElementById('approvedStatusCards');
 
-        // เมื่อยังไม่มีรายการอนุมัติ ให้แสดง empty state แทน mock HTML
+        // เมื่อยังไม่มีรายการอนุมัติ ให้แสดง loading/progress state แทน
         if (!orderedApproved.length) {
           if (statusCardsWrap) {
             statusCardsWrap.classList.remove('has-multiple');
             statusCardsWrap.innerHTML = `
-              <div class="status-card status-card-empty" data-default-card="true">
-                <h3>ยังไม่มีข้อมูลที่อนุมัติแล้ว</h3>
-                <p class="status-card-empty-text">กรุณาอนุมัติรายการจากหน้า Admin หรือเชื่อมต่อ Google Sheet เพื่อแสดงข้อมูลบนหน้าแรก</p>
+              <div class="status-card status-card-loading" data-default-card="true">
+                <div class="status-loading-kicker">กำลังเชื่อมต่อข้อมูล</div>
+                <h3>กำลังดึงข้อมูลเพื่อแสดงผลบน Dashboard</h3>
+                <p class="status-card-empty-text">ระบบกำลังตรวจสอบข้อมูลที่ได้รับการอนุมัติและเตรียมสรุปผลเพื่อนำขึ้นแสดงบนหน้าแรก</p>
+                <div class="status-loading-progress" aria-hidden="true"><div class="status-loading-progress-bar"></div></div>
+                <div class="status-loading-meta"><span>ดึงข้อมูลจากแหล่งข้อมูล</span><span>กำลังดำเนินการ</span></div>
+                <div class="status-loading-steps">
+                  <div class="status-loading-step is-active">เชื่อมต่อข้อมูลจาก Google Sheet / ระบบต้นทาง</div>
+                  <div class="status-loading-step is-active">ตรวจสอบรายการและสถานะการอนุมัติ</div>
+                  <div class="status-loading-step is-active">เตรียมสรุปผลเพื่อแสดงบนหน้า Dashboard</div>
+                </div>
               </div>
             `;
           }
